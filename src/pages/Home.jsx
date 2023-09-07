@@ -1,34 +1,24 @@
-import { useState } from 'react';
-// import { NavLink } from 'react-router-dom'
-
-// LEAFLET IMPORT
+import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 // import { divIcon, point } from 'leaflet';
 import "leaflet/dist/leaflet.css"
 // import MarkerClusterGroup from 'react-leaflet-cluster';
+// import floras from '../data/floras.json'
+import axios from 'axios'
 
-// FILES IMPORT
-import floras from '../data/floras.json'
-// import markerIcon from './assets/marker.png'; // Import the image using ES6 import
+const url = 'http://localhost:3000/features'
 
+function Home() {
 
-function Home() {  
-	// DUMMY DATA MARKERS
-	// const florasLoc = [
-	// 	{
-	// 		geocode: [1.3, 2.3522],
-	// 		popUp: "Hello, I am pop up 1"
-	// 	},
-	// 	{
-	// 		geocode: [48.85, 2.3522],
-	// 		popUp: "Hello, I am pop up 2"
-	// 	},
-	// 	{
-	// 		geocode: [48.855, 2.34],
-	// 		popUp: "Hello, I am pop up 3"
-	// 	}
-	// ];
+	const [floras, setFloras] = useState([])
 
+	//MENGAMBIL DATA
+	useEffect(() => {
+		axios.get(url).then((res) => {
+			setFloras(res?.data ?? [])
+		})
+	}, [])
+	
 	// // CREATE CUSTOM ICON (add Icon from leaflet)
 	// const customIcon = new Icon({
 	// iconUrl: markerIcon,
@@ -122,13 +112,13 @@ function Home() {
 	</div>
 
     {/* MAP CONTAINER */}
-    <MapContainer center={[1.2, 116]} zoom={8} className={`h-[calc(100vh-64px)] mt-[64px] z-0`}>
+    <MapContainer center={[1.2, 116]} zoom={8} className={`h-[calc(100vh-64px)] z-0`}>
 		<TileLayer
 			attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 		/>
 		{/* <MarkerClusterGroup chunkedLoading iconCreateFunction={createCustomClusterIcon} > */}
-			{floras.features.map((flora, i) => (
+			{floras.map((flora, i) => (
 				<Marker position={flora.geometry.coordinates.toReversed()} key={i} eventHandlers={{click: () => handleSpecies(flora.properties)}}>
 					<Popup>{flora.properties.Species}</Popup>
 				</Marker>

@@ -16,7 +16,7 @@ export default function Nav() {
 	
 	return (
     <>
-	<nav ref={elementRef} className='navbar absolute top-0 z-10 bg-white flex justify-between w-screen py-3 px-8 items-center shadow-md'>
+	<nav ref={elementRef} className='navbar sticky top-0 z-10 bg-white flex justify-between w-full py-3 px-8 items-center shadow-md'>
 		{/* LOGO */}
 		<div className="text-blackFo font-bold text-2xl">
 			<span className='text-primary'>Green</span>vfo
@@ -28,12 +28,16 @@ export default function Nav() {
 				<NavLink to="/" className={({ isActive }) => (isActive ? activeLink : inactiveLink )}>
                     <span className="material-symbols-outlined">home</span>Home
                 </NavLink>
-				<NavLink to="/list-flora" className={({ isActive }) => (isActive ? activeLink : inactiveLink )}>
+				{/* <NavLink to="/list-flora" className={({ isActive }) => (isActive ? activeLink : inactiveLink )}>
                     <span className="material-symbols-outlined">menu</span>List Flora
-                </NavLink>
+                </NavLink> */}
 				<NavLink to="/add-flora" className={({ isActive }) => (isActive ? activeLink : inactiveLink )}>
                     <span className="material-symbols-outlined">add_circle</span>Add Flora
                 </NavLink>
+				{/* TESTING */}
+				{/* <NavLink to="/crud-test" className={({ isActive }) => (isActive ? activeLink : inactiveLink )}>
+                    <span className="material-symbols-outlined">bug_report</span>CRUD Test
+                </NavLink> */}
 			</ul>
 		</div>
 	</nav>
